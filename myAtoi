@@ -1,0 +1,92 @@
+package sToIATOI;
+
+public class stringToInteger {
+
+	public static int myAtoi(String s) {
+		int i = 0;
+		int output = 0;
+		int digit = 0;
+        int badinput = 0;
+        boolean numstart = false;
+		boolean negative = false;
+		while (i < s.length()) {
+            if (badinput >=2) {
+            	return output;
+            }
+			digit = s.charAt(i) - 48;
+			if (digit == -3) {
+				if (numstart)
+					break;
+                badinput ++;
+				negative = true;
+				i++;
+				continue;
+			}
+            if (digit == -5) {
+				if (numstart)
+					break;
+            	badinput++;
+                i++;
+                continue;
+            }
+			if ((digit >= 0) && (digit <= 9)) {
+				if (!numstart)
+					numstart = true;
+				if (output >= 214748364) {
+					if (output == 214748364) {
+						if ((digit <= 7) && (digit >= 0)) {
+							output = (output * 10) + digit;
+							if (s.length() - i > 1)
+								output = 2147483647;
+						}
+						else
+							output = 2147483647;
+					}
+					else
+						output = 2147483647;
+					break;
+					}
+				if (output <= -214748364) {
+					if (output == -214748364) {
+						if ((digit <= 7) && (digit >= 0)) {
+							output = (output * 10) - digit;
+							if (s.length() - i > 1)
+								output = -2147483648;
+						}
+						else
+							output = -2147483648;
+					}
+					else
+						output = -2147483648;
+					break;
+					}
+				if (output >= 0)
+					output = (output * 10) + digit;
+				else
+					output = (output * 10) - digit;
+				}
+			else {
+				if (numstart)
+					break;
+				if (badinput >= 1)
+					break;
+				if (digit != -16)
+					break;
+			}
+			if (output > 0) {
+				if (negative) {
+					output = -1 * output;
+					negative = false;
+				}
+			}
+			i++;
+		}
+		return output;
+	}
+
+	public static void main(String[] args) {
+		String s = "  +  413";
+		System.out.println(myAtoi(s));
+	}
+
+}
